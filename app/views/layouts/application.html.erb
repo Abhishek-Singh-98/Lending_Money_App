@@ -11,6 +11,17 @@
   </head>
 
   <body>
+    <% flash.each do |type, message| %>
+      <%if type == 'notice'%>
+      <div style="color: white;" align="center" class="success_message">
+        <%= message %>
+      </div>
+      <%else%>
+      <div style="color: white;" align="center" class="failure_message">
+        <%= message %>
+      </div>
+      <%end%>
+    <% end %>
     <%= yield %>
   </body>
 </html>

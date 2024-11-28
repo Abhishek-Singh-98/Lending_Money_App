@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <h1 style="color: Green;" align="center"> Signup </h1>
+    </head>
+    <body>
+        <form action="/user_signup" method="post" style="margin: 100px 720px; color: brown">
+            <fieldset style="height: 380px; width: 400px">
+                <label style="margin: 0px 0px 0px 80px">
+                <input type="radio" name="user[role]" value="Admin" > Admin &nbsp &nbsp &nbsp &nbsp &nbsp
+                <input type="radio" name="user[role]" value="Other" > Others
+                </label><br><br>
+                <label>First Name:
+                    <input name="user[first_name]" placeholder= "Enter First Name Here.." required>
+                </label><br><br>
+                <label>Last Name:
+                    <input name="user[last_name]" placeholder= "Enter Last Name Here.." required>
+                </label><br><br>
+                <label>Email:
+                    <input name="user[email]" placeholder= "Enter Email Here.." required>
+                </label><br><br>
+                <label>Phone Number:
+                    <input name="user[contact_number]" placeholder= "Enter Phone Number Here.." required>
+                </label><br><br>
+                <label> Identification Details: <br>
+                    <select name="user[proof_type]" required>
+                        <option value="Aadhar Card">Aadhar Card</option>
+                        <option value="Pan Card">Pan Card</option>
+                        <option value="Passport Number">Passport</option>
+                        <option value="Voter ID">Voter Card</option>
+                    </select> &nbsp &nbsp &nbsp &nbsp 
+                    <input name="user[valid_proof_id]" placeholder= "Enter Id Number Here.." required>
+                </label><br><br>
+                <label>Password:
+                    <input type="password" name="user[password]" placeholder= "Enter password Here.." required>
+                </label><br><br>
+                <label>Confirm Password:
+                    <input type="password" name="user[password_confirmation]" placeholder= "Confirm Password Here.." required>
+                </label>
+                <p>
+                    <button type="submit" style="margin: 0px 0px 0px 300px">Signup</button>
+                </p>
+                <p>
+                    <label>If you already registered?</label>
+                    <a href="/login/new">Login</a>
+                </p>
+            </fieldset>
+        </form>
+    </body>
+</html>

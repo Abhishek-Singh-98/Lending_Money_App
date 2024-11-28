@@ -1,0 +1,9 @@
+<h2>Profile Page</h2> <br>
+<%# <%= link_to 'Logout', user_logout_path(user_id: @user.id), method: :get, data: { confirm: 'Are you sure you want to Logout?' }%>
+<p>Name : <%=@user.first_name %><%=@user.last_name %> </p>
+<p>Role : <%=@user.role %></p> 
+<p>Email : <%=@user.email %></p>
+<%= link_to 'Loan_Requests', '', method: :get if @user.role == 'Admin'%>
+<br>
+<%# <%= link_to 'Patient List', patients_path, method: :get if @user.role == 'Receptionist'%>
+<%# <%= link_to 'My Appointments', user_my_appointments_path(user_id: @user.id), method: :get if @user.role == 'Doctor'%>

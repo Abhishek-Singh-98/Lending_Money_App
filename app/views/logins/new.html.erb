@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <h1 style="color: Green;" align="center"> Login </h1>
+    </head>
+    <body>
+        <form action="/login" method="post" style="margin: 100px 720px; color: brown">
+            <fieldset style="height: 150px; width: 400px">
+                <label style="margin: 0px 0px 0px 70px">
+                <input type="radio" name="user[role]" value="Admin" > Admin &nbsp &nbsp &nbsp &nbsp &nbsp
+                <input type="radio" name="user[role]" value="Other" > Other
+                </label><br><br>
+                <label>Email:
+                    <input name="user[email]" placeholder= "Enter Email Here.." required>
+                </label><br><br>
+                <label>Password:
+                    <input type="password" name="user[password]" placeholder= "Enter password Here.." required>
+                </label><br><br>
+                <p>
+                    <button type="submit" style="margin: 0px 0px 0px 200px">Login</button>
+                </p>
+            </fieldset>
+        </form>
+    </body>
+</html>
