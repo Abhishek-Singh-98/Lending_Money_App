@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   resource :login, only: [:new]
 
   resources :users, only: [:edit, :update, :show, :destroy] do
-    resources :loan_requests
-    get 'my_loan_requests', to: "users#my_loan_requests"
+    resources :loan_requests do
+      get "action_on_loan", to: "loan_requests#admin_approve_reject_loan_request"
+    end
+    get 'my_loans', to: "users#my_loans"
   end
 end

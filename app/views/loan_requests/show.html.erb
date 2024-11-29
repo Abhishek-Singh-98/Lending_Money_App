@@ -1,0 +1,24 @@
+<h1>this is show page for <%= @loan_request.special_request_id%> </h1>
+
+<label> Loan ID: <%=@loan_request.special_request_id%> </label><br><br>
+<label> Requested By: <%=@loan_request.user.first_name%> </label><br><br>
+<label> Contact Number: <%=@loan_request.user.contact_number%> </label><br><br>
+<label> Requested Amount: <%=@loan_request.desired_amount%> </label><br><br>
+<label> Desired Interest Rate: <%=@loan_request.desired_interest%> </label><br><br>
+<label> Interest Payable: <%=@loan_request.interest_payable%> </label><br><br>
+<label> Amount Payable: <%=@loan_request.amount_payable%> </label><br><br>
+<label> Start Date: <%=@loan_request.start_date%> </label><br><br>
+<label> Last Date To Pay: <%=@loan_request.end_date%> </label><br><br>
+<%if @loan_request.status == 'rejected' || @loan_request.status == 'closed'%>
+<label> Loan Status: <strong style="color: red;"><%=@loan_request.status%></strong></label><br><br>
+<%elsif @loan_request.status == 'approved' || @loan_request.status == 'open'%>
+<label> Loan Status: <strong style="color: green;"><%=@loan_request.status%></strong></label><br><br>
+<%else%>
+<label> Loan Status: <strong style="color: brown;"><%=@loan_request.status%></strong></label><br><br>
+<%end%>
+<%= link_to 'Edit', edit_user_loan_request_path(user_id: @loan_request.user.id, id: @loan_request.id), method: :get if @user.Other? && ['approved', 'open', 'closed', 'rejected'].exclude?(@loan_request.status) %>
+<%= link_to 'Re-Adjust', edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id), method: :get if @loan_request.user.Admin? && ['approved', 'open', 'closed', 'rejected'].exclude?(@loan_request.status) %>
+<%= link_to 'Approve', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'approved'), method: :get if @user.Admin? && ['approved', 'open', 'closed', 'rejected'].exclude?(@loan_request.status)%>
+<%= link_to 'Reject', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'rejected'), method: :get if @user.Admin? && ['approved', 'open', 'closed', 'rejected'].exclude?(@loan_request.status)%>
+<%= link_to 'Confirm', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: true), method: :get if @user.Other? && @loan_request.status == 'approved' && @loan_request.user_confirmed.nil? %>
+<%= link_to 'Decline', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if @user.Other? && @loan_request.status == 'approved' && @loan_request.user_confirmed.nil?%>

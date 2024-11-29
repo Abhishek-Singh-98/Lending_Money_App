@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     end   
   end
 
-  def my_loan_requests
+  def my_loans
     @loan_requests = @user.loan_requests
   end
 

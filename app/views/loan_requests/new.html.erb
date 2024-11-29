@@ -1,0 +1,17 @@
+<div style="margin: 100px 520px; color: brown; border-color: grey; border-width: 2px; border-style: solid; width: 25%; height: 170px; width: 320px">
+<%= form_with url: user_loan_requests_path, method: :post do |form| %>
+  <div style="margin: 5px">
+    <%= form.label :desired_amount %>
+    <%= form.text_field :desired_amount %>
+  </div><br>
+  <div style="margin: 5px">
+    <%= form.label :desired_interest %>
+    <%= form.text_field :desired_interest %>
+  </div><br>
+  <div style="margin: 5px">
+    <%= form.label :loan_tenure %>
+    <%= form.select :loan_tenure, ["1 month", "3 months", "6 months", "12 months", "18 months", "24 months"] %>
+  </div><br>
+  <%= form.submit "Make Request" %>
+<% end %>
+</div>

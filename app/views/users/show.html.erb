@@ -3,7 +3,7 @@
 <p>Name : <%=@user.first_name %><%=@user.last_name %> </p>
 <p>Role : <%=@user.role %></p> 
 <p>Email : <%=@user.email %></p>
-<%= link_to 'Loan_Requests', '', method: :get if @user.role == 'Admin'%>
+<%= link_to 'Loan_Requests', user_loan_requests_path(user_id: @user.id), method: :get if @user.role == 'Admin'%>
+<%= link_to 'Request New Loan', new_user_loan_request_path(user_id: @user.id), method: :get if @user.role == 'Other'%> &nbsp &nbsp
+<%= link_to 'My Loans', user_my_loans_path(user_id: @user.id), method: :get if @user.role == 'Other'%> 
 <br>
-<%# <%= link_to 'Patient List', patients_path, method: :get if @user.role == 'Receptionist'%>
-<%# <%= link_to 'My Appointments', user_my_appointments_path(user_id: @user.id), method: :get if @user.role == 'Doctor'%>
