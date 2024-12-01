@@ -25,5 +25,7 @@ module LendingMoneyApp
 
     # Ensure FactoryBot loads files from the custom directory
     config.factory_bot.definition_file_paths = ["spec/factories"]
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

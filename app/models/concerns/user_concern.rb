@@ -10,7 +10,7 @@ module UserConcern
     if Admin?
       Wallet.create(user_id: self.id, amount: 10_00_000.to_f)
     else
-      Wallet.create(user_id: self.id, amount: 0.0)
+      Wallet.create(user_id: self.id, amount: 0.0, max_limit: 10_000.to_f)
     end
   end
 end

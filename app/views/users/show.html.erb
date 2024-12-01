@@ -1,5 +1,5 @@
-<h2>Profile Page</h2> <br>
-<%# <%= link_to 'Logout', user_logout_path(user_id: @user.id), method: :get, data: { confirm: 'Are you sure you want to Logout?' }%>
+<%= render "layouts/header" %>
+<h2>My Profile</h2> <br>
 <p>Name : <%=@user.first_name %><%=@user.last_name %> </p>
 <p>Role : <%=@user.role %></p> 
 <p>Email : <%=@user.email %></p>

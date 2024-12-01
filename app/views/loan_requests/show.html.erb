@@ -1,4 +1,4 @@
-<h1>this is show page for <%= @loan_request.special_request_id%> </h1>
+<%= render "layouts/header" %>
 
 <label> Loan ID: <%=@loan_request.special_request_id%> </label><br><br>
 <label> Requested By: <%=@loan_request.user.first_name%> </label><br><br>
@@ -22,3 +22,4 @@
 <%= link_to 'Reject', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'rejected'), method: :get if @user.Admin? && ['approved', 'open', 'closed', 'rejected'].exclude?(@loan_request.status)%>
 <%= link_to 'Confirm', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: true), method: :get if @user.Other? && @loan_request.status == 'approved' && @loan_request.user_confirmed.nil? %>
 <%= link_to 'Decline', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if @user.Other? && @loan_request.status == 'approved' && @loan_request.user_confirmed.nil?%>
+<%= link_to 'Repay Loan', user_loan_request_repay_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if @user.Other? && @loan_request.status == 'open'%>

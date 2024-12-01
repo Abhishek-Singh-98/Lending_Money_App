@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def check_login_user
     begin
       @token = JwtAuthentication.decode(session[:token]) if session[:token]
-      @user = User.find_by(id: @token['id'])
+      @user = User.find_by(id: @token['id']) if @token
       unless @user.present?
         flash[:alert] = "No Such User Present."
         redirect_to new_login_path

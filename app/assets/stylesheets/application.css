@@ -21,3 +21,39 @@
 .failure_message{
    background-color: red;
 }
+
+.navbar {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: #f8f9fa;
+   padding: 10px 200px;
+}
+
+.navbar img {
+   width: 8%;
+   height: auto;
+}
+
+.navbar ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   gap: 80px; 
+   margin-left: auto;
+}
+
+.navbar li {
+   display: inline-block;
+}
+
+.navbar li a {
+   text-decoration: none;
+   font-size: 16px;
+   color: #333;
+}
+
+.navbar li a:hover {
+   color: #007bff;
+}

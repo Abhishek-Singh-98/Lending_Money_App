@@ -1,6 +1,13 @@
+<%= render "layouts/header" %>
 <%@loan_requests.each do |loan|%>
     <p style="border-color: grey; border-width: 2px; border-style: solid; width: 50%">
-            
+        <%if loan.status == 'rejected' || loan.status == 'closed'%>
+        <label style="margin: 0px 0px 0px 500px"> Status: <strong style="color: red;"><%=loan.status%></strong></label><br><br>
+        <%elsif loan.status == 'approved' || loan.status == 'open'%>
+        <label style="margin: 0px 0px 0px 500px"> Status: <strong style="color: green;"><%=loan.status%></strong></label><br><br>
+        <%else%>
+        <label style="margin: 0px 0px 0px 500px"> Status: <strong style="color: brown;"><%=loan.status%></strong></label><br><br>
+        <%end%>
         <label> Loan ID: <%=loan.special_request_id%> </label><br><br>
         <label> Requested By: <%=loan.user.first_name%> </label><br><br>
         <label> Contact Number: <%=loan.user.contact_number%> </label><br><br>

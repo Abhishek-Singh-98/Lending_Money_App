@@ -31,7 +31,19 @@ class UsersController < ApplicationController
   end
 
   def my_loans
-    @loan_requests = @user.loan_requests
+    @loan_requests = @user.loan_requests.order(id: :desc)
+  end
+
+  def logout_user
+    if session[:user_id] == params[:user_id].to_i
+      session[:token] = nil
+      session[:user_id] = nil
+      flash[:notice] = 'Logged Out Succesfully'
+      redirect_to new_login_path
+    else
+      flash[:alert] = 'Unauthorize to logout this account.'
+      redirect_to user_path(id: params[:user_id]) 
+    end
   end
 
   private

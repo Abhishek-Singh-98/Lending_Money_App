@@ -1,0 +1,14 @@
+<%= render "layouts/header" %>
+<div align='center'>
+<h2 style="display: inline;">Balance : </h2> <h2 style="display: inline;"><%= @wallet.amount%></h2>
+    <div>
+        <form action="/users/<%=@user.id%>/wallet" method="patch" style="margin: 100px 420px; color: brown">
+            <fieldset>
+                <label>Amount:
+                    <input type="number" name="amount" min="0" max="10000" placeholder= "1000" required>
+                </label><br><br>
+                <button type="submit" style="margin: 0px 0px 0px 60px">Add Money</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
