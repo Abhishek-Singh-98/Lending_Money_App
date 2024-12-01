@@ -78,5 +78,3 @@ end
 gem 'jwt'
 gem 'pg'
 gem 'sidekiq'
-gem 'sidekiq-scheduler'
-gem 'whenever', require: false

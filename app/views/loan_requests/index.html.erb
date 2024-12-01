@@ -1,14 +1,21 @@
 <%= render "layouts/header" %>
-<%@loan_requests.each do |loan|%>
-    <p style="border-color: grey; border-width: 2px; border-style: solid; width: 50%">
-            
-        <label> Loan ID: <%=loan.special_request_id%> </label><br><br>
-        <label> Requested By: <%=loan.user.first_name%> </label><br><br>
-        <label> Contact Number: <%=loan.user.contact_number%> </label><br><br>
-        <label> Requested Amount: <%=loan.desired_amount%> </label><br><br>
-        <label> Desired Interest Rate: <%=loan.desired_interest%> </label><br><br>
-        <%= link_to 'Re-Adjust', edit_user_loan_request_path(user_id: @user.id, id: loan.id), method: :get unless ['approved', 'open', 'closed', 'rejected'].include?(loan.status)%> &nbsp &nbsp &nbsp
-        <%= link_to 'Approve', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: loan.id , status: 'approved'), method: :get if @user.Admin? && ['approved', 'open', 'closed', 'rejected'].exclude?(loan.status) %> &nbsp &nbsp &nbsp
-        <%= link_to 'Reject', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: loan.id , status: 'rejected'), method: :get if @user.Admin? && ['approved', 'open', 'closed', 'rejected'].exclude?(loan.status) %> &nbsp &nbsp &nbsp
-    </p>
-<%end%>
+<% if @loan_requests.blank? %>
+    <div align='center'>
+        <h3>No Loans Request History Present.!!</h3>
+    </div>
+<% else %>
+    <%@loan_requests.each do |loan|%>
+        <p style="border-color: grey; border-width: 2px; border-style: solid; width: 50%">
+                
+            <label> Loan ID: <%=loan.special_request_id%> </label><br><br>
+            <label> Requested By: <%=loan.user.first_name%> </label><br><br>
+            <label> Contact Number: <%=loan.user.contact_number%> </label><br><br>
+            <label> Requested Amount: <%=loan.desired_amount%> </label><br><br>
+            <label> Desired Interest Rate: <%=loan.desired_interest%> </label><br><br>
+            <%= link_to 'View', user_loan_request_path(user_id: @user.id, id: loan.id), method: :get %> &nbsp &nbsp
+            <%= link_to 'Re-Adjust', edit_user_loan_request_path(user_id: @user.id, id: loan.id), method: :get if re_adjust_available?(loan)%> &nbsp &nbsp &nbsp
+            <%= link_to 'Approve', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: loan.id , status: 'approved'), method: :get if can_approve_reject_request?(@user, loan) %> &nbsp &nbsp &nbsp
+            <%= link_to 'Reject', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: loan.id , status: 'rejected'), method: :get if can_approve_reject_request?(@user, loan) %> &nbsp &nbsp &nbsp
+        </p>
+    <%end%>
+<% end %>

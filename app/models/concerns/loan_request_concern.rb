@@ -10,8 +10,6 @@ module LoanRequestConcern
       end
     end
 
-    before_update :check_status_for_editability
-  
     after_update do
       check_status_and_update_wallet
     end
@@ -45,14 +43,6 @@ module LoanRequestConcern
     unless self.amount_payable <= user_wallet.max_limit
       loan_transaction(self, self.user, 'model')
       self.update(status: 'closed')
-    end
-  end
-
-  def check_status_for_editability
-    LoanRequest.transaction do
-      if ["readjustment_requested", "waiting_for_adjustment_acceptance", "requested"].exclude?(self.status_was)
-        raise ActiveRecord::TransactionRollbackError
-      end
     end
   end
 end

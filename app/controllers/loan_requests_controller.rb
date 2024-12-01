@@ -5,7 +5,8 @@ class LoanRequestsController < ApplicationController
   before_action :check_open_loans, only: [:create]
   before_action :find_loan_request, only: [:show, :edit, :update, :admin_approve_reject_loan_request,
                 :repay_full_loan]
-  before_action :check_for_approved_status, only: [:update]
+  before_action :unauthorized_admin_user, :unautorized_other_user, only: [:admin_approve_reject_loan_request]
+  before_action :check_editable_condition, only: [:update]
   before_action :check_wallet_balance, only: [:repay_full_loan]
 
   def index
@@ -103,9 +104,9 @@ class LoanRequestsController < ApplicationController
     @loan_request = params[:id].present? ? LoanRequest.find(params[:id]) : LoanRequest.find(params[:loan_request_id])
   end
 
-  def check_for_approved_status
-    if @loan_request.status == 'approved'
-      return redirect_to edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id), alert: 'Loan is Already Approved'
-    end
-  end
+  # def check_for_approved_status
+  #   if @loan_request.status == 'approved'
+  #     return redirect_to edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id), alert: 'Loan is Already Approved'
+  #   end
+  # end
 end
