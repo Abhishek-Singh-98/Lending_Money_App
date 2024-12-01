@@ -4,7 +4,6 @@ class User < ApplicationRecord
 
   has_one :wallet, class_name: "Wallet", dependent: :destroy
   has_many :loan_requests, class_name: "LoanRequest", dependent: :destroy
-  has_many :loan_repay_historys
 
   validates_presence_of :first_name, :last_name, :email, :role, :contact_number,
                         :proof_type, :valid_proof_id
