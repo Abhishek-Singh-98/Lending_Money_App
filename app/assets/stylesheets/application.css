@@ -57,3 +57,22 @@
 .navbar li a:hover {
    color: #007bff;
 }
+
+.container {
+   display: flex;
+   justify-content: left;
+   gap: 200px;
+ }
+
+.box {
+   border: 2px solid black;
+   height: 420px;
+   width: 420px;  
+   box-sizing: content-box;
+   padding-inline: 10px;
+   position: relative;
+   left: 100px;
+   top: 20px;
+   border-radius: 10px;
+   overflow: auto;
+}

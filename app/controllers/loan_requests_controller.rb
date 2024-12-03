@@ -34,6 +34,7 @@ class LoanRequestsController < ApplicationController
   end
 
   def update
+    format_nested_attribute_hash
     unless @loan_request.present? && @loan_request.update(update_loan_params)
       return redirect_to edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id), alert: 'Reqest failed to send'
     end
@@ -74,7 +75,10 @@ class LoanRequestsController < ApplicationController
 
   def update_loan_params
     params.require(:loan_request).permit(:desired_amount, :desired_interest, :loan_tenure, :status, :start_date, :end_date,
-                  :interest_payable, :amount_payable, :special_request_id)
+                  :interest_payable, :amount_payable, :special_request_id,
+                  loan_request_readjustments_attributes: [:id, :previous_amount,
+                  :readjusted_amount, :previous_interest, :readjusted_interest, :previous_tenure,
+                  :readjusted_tenure, :readjusted_by, :_destroy])
   end
 
   def user_type_loan_update
@@ -101,7 +105,7 @@ class LoanRequestsController < ApplicationController
   end
 
   def find_loan_request
-    @loan_request = params[:id].present? ? LoanRequest.find(params[:id]) : LoanRequest.find(params[:loan_request_id])
+    @loan_request = params[:id].present? ? LoanRequest.includes(:loan_request_readjustments).find(params[:id]) : LoanRequest.includes(:loan_request_readjustments).find(params[:loan_request_id])
   end
 
   # def check_for_approved_status

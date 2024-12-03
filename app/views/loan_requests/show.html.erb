@@ -1,24 +1,47 @@
 <%= render "layouts/header" %>
-
-<label> Loan ID: <%=@loan_request.special_request_id%> </label><br><br>
-<label> Requested By: <%=@loan_request.user.first_name%> </label><br><br>
-<label> Contact Number: <%=@loan_request.user.contact_number%> </label><br><br>
-<label> Requested Amount: <%=@loan_request.desired_amount%> </label><br><br>
-<label> Desired Interest Rate: <%=@loan_request.desired_interest%> </label><br><br>
-<label> Interest Payable: <%=@loan_request.interest_payable%> </label><br><br>
-<label> Amount Payable: <%=@loan_request.amount_payable%> </label><br><br>
-<label> Start Date: <%=@loan_request.start_date%> </label><br><br>
-<label> Last Date To Pay: <%=@loan_request.end_date%> </label><br><br>
-<%if @loan_request.status == 'rejected' || @loan_request.status == 'closed'%>
-<label> Loan Status: <strong style="color: red;"><%=@loan_request.status%></strong></label><br><br>
-<%elsif @loan_request.status == 'approved' || @loan_request.status == 'open'%>
-<label> Loan Status: <strong style="color: green;"><%=@loan_request.status%></strong></label><br><br>
-<%else%>
-<label> Loan Status: <strong style="color: brown;"><%=@loan_request.status%></strong></label><br><br>
-<%end%>
-<%= link_to 'Re-Adjust', edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id), method: :get if re_adjust_available?(@loan_request) %>
-<%= link_to 'Approve', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'approved'), method: :get if can_approve_reject_request?(@user, @loan_request)%>
-<%= link_to 'Reject', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'rejected'), method: :get if can_approve_reject_request?(@user, @loan_request)%>
-<%= link_to 'Confirm', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: true), method: :get if can_confirm_decline_adjustments?(@user, @loan_request) %>
-<%= link_to 'Decline', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if can_confirm_decline_adjustments?(@user, @loan_request)%>
-<%= link_to 'Repay Loan', user_loan_request_repay_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if repay_available?(@user, @loan_request)%>
+<div class="container">
+    <div class="box">
+        <strong style="padding: 38%; font-size: 20px;"><u>My Profile</u></strong><br><br>
+        <label> Loan ID: <%=@loan_request.special_request_id%> </label><br><br>
+        <label> Requested By: <%=@loan_request.user.first_name%> </label><br><br>
+        <label> Contact Number: <%=@loan_request.user.contact_number%> </label><br><br>
+        <label> Requested Amount: <%=@loan_request.desired_amount%> </label><br><br>
+        <label> Desired Interest Rate: <%=@loan_request.desired_interest%> </label><br><br>
+        <label> Interest Payable: <%=@loan_request.interest_payable%> </label><br><br>
+        <label> Amount Payable: <%=@loan_request.amount_payable%> </label><br><br>
+        <label> Start Date: <%=@loan_request.start_date%> </label><br><br>
+        <label> Last Date To Pay: <%=@loan_request.end_date%> </label><br><br>
+        <%if @loan_request.status == 'rejected' || @loan_request.status == 'closed'%>
+        <label> Loan Status: <strong style="color: red;"><%=@loan_request.status%></strong></label><br><br>
+        <%elsif @loan_request.status == 'approved' || @loan_request.status == 'open'%>
+        <label> Loan Status: <strong style="color: green;"><%=@loan_request.status%></strong></label><br><br>
+        <%else%>
+        <label> Loan Status: <strong style="color: brown;"><%=@loan_request.status%></strong></label><br><br>
+        <%end%>
+        <%= link_to 'Re-Adjust', edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id), method: :get if re_adjust_available?(@loan_request) %>
+        <%= link_to 'Approve', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'approved'), method: :get if can_approve_reject_request?(@user, @loan_request)%>
+        <%= link_to 'Reject', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: 'rejected'), method: :get if can_approve_reject_request?(@user, @loan_request)%>
+        <%= link_to 'Confirm', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: true), method: :get if can_confirm_decline_adjustments?(@user, @loan_request) %>
+        <%= link_to 'Decline', user_loan_request_action_on_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if can_confirm_decline_adjustments?(@user, @loan_request)%>
+        <%= link_to 'Repay Loan', user_loan_request_repay_loan_path(user_id: @user.id, loan_request_id: @loan_request.id , status: false), method: :get if repay_available?(@user, @loan_request)%>
+    </div>
+    <div class="box">
+        <strong style="padding: 10%; font-size: 20px;"><u>Readjustment History :</u></strong><br><br>
+        <%unless @loan_request.loan_request_readjustments.blank?%>
+            <% @loan_request.loan_request_readjustments.each do |readjustment|%>
+                <p style="border-color: green; border-width: 2px; border-style: solid; border-radius: 10px; padding: 10px;">
+                    <label> Previous Amount: <%=readjustment.previous_amount%> </label><br>
+                    <label> Readjusted Amount: <%=readjustment.readjusted_amount%> </label><br>
+                    <label> Previous Interest Rate: <%=readjustment.previous_interest%> </label><br>
+                    <label> Readjusted Payable: <%=readjustment.readjusted_interest%> </label><br>
+                    <label> Previous Tenure: <%=readjustment.previous_tenure%> </label><br>
+                    <label> Readjusted Tenure: <%=readjustment.readjusted_tenure%> </label><br>
+                    <label> Readjustment Date - Time: <%=local_time_of_user(readjustment.created_at)%> </label><br>
+                    <label> Readjusted by: <%=readjustment.readjusted_by%> </label><br>
+                </p>
+            <%end%>
+        <%else%>
+        <strong style="padding: 70px;color: orange;"> No History Of Readjustment present.!!</strong>
+        <%end%>
+    </div>
+</div>

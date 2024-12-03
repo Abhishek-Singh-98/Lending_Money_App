@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_30_131847) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_03_035508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "loan_request_readjustments", force: :cascade do |t|
+    t.bigint "loan_request_id"
+    t.float "previous_amount"
+    t.float "readjusted_amount"
+    t.float "previous_interest"
+    t.float "readjusted_interest"
+    t.integer "previous_tenure"
+    t.integer "readjusted_tenure"
+    t.string "readjusted_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["loan_request_id"], name: "index_loan_request_readjustments_on_loan_request_id"
+  end
 
   create_table "loan_requests", force: :cascade do |t|
     t.float "desired_amount"

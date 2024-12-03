@@ -14,4 +14,8 @@ module LoanRequestsHelper
   def re_adjust_available?(loan_request)
     ['approved', 'open', 'closed', 'rejected'].exclude?(loan_request.status)
   end
+
+  def local_time_of_user(utc_time_of_readjustment)
+    utc_time_of_readjustment.localtime.to_s.split(' ')[0..1].join(' - ')
+  end
 end
