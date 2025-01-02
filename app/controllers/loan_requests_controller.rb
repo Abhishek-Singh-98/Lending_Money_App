@@ -2,6 +2,7 @@ class LoanRequestsController < ApplicationController
   include UsersConcern
   include LoanRequestsTransaction
   before_action :check_login_user
+  before_action :check_authorized_user
   before_action :check_open_loans, only: [:create]
   before_action :find_loan_request, only: [:show, :edit, :update, :admin_approve_reject_loan_request,
                 :repay_full_loan]
@@ -20,7 +21,7 @@ class LoanRequestsController < ApplicationController
     @loan_request = LoanRequest.new(loan_params)
     @loan_request.user = @user
     if @loan_request.save
-      CalculateRepayAmountJob.perform_async
+      CalculateRepayAmountJob.perform_in(5.minutes)
       redirect_to user_loan_request_path(user_id: @user.id, id: @loan_request.id), notice: 'Loan Request is send'
     else
       redirect_to user_path(id: @user.id), alert: "Couldn't process your loan request"

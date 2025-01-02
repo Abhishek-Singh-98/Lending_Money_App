@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_login_user
+  before_action :check_authorized_user, only: [:my_loans]
 
   def show
     return redirect_to '/login/new', alert: 'Illegal Action Found' if (@user.Other? && @user.id != params[:id].to_i)

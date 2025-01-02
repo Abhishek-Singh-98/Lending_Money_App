@@ -35,4 +35,10 @@ class ApplicationController < ActionController::Base
       return redirect_to edit_user_loan_request_path(user_id: @user.id, id: @loan_request.id)
     end
   end
+
+  def check_authorized_user
+    unless session[:user_id] == @user.id && session[:user_id] == params[:user_id].to_i
+      return redirect_to user_path(id: @user.id), alert: 'unauthorized access'
+    end
+  end
 end
