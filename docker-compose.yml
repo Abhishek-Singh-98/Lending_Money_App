@@ -1,0 +1,46 @@
+services:
+  app:
+    build: .
+    container_name: Lending_Money_App_Dev
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres@postgresdb:5432/Lending_Money_App_development
+      REDIS_URL: redis://redisdb:6379/0
+    volumes:
+      - .:/app
+      - ./bundle_cache:/bundle
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgresdb
+      - redisdb
+
+  postgresdb:
+    image: postgres:16
+    container_name: postgresdb
+    restart: on-failure:5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: Lending_Money_App_development
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresdb_data:/var/lib/postgres/data
+    
+  redisdb:
+    image: redis:6.2-alpine
+    container_name: redisdb
+    command: redis-server
+    volumes:
+      - ./redis_data:/data
+
+  sidekiq:
+    build: .
+    volumes:
+    - .:/app
+    environment:
+      REDIS_URL: redis://redisdb:6379/0
+    depends_on:
+      - redisdb
+    command: bundle exec sidekiq

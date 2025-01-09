@@ -70,4 +70,6 @@ Rails.application.configure do
   # 
   
   config.active_job.queue_adapter = :sidekiq
+
+  config.web_console.permissions = '172.18.0.0/16'
 end

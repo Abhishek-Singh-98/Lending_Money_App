@@ -8,9 +8,9 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   encoding: unicode
-  username: Lending_Money_App
-  password: testpassword@2024
-  host: localhost
+  username: postgres
+  password: postgres
+  host: postgresdb
   port: 5432
 
 development:
